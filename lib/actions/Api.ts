@@ -12,7 +12,7 @@ export const fetchGitHubUsername = async (username: string) => {
     
     if (!response.ok) {
       if (response.status === 404) {
-        throw new Error('User not found.');
+        return { error: `User '${username}' not found - use your username not your name` };
       } else if (response.status === 401) {
         throw new Error('Invalid or missing GitHub token.');
       } else {
@@ -23,7 +23,7 @@ export const fetchGitHubUsername = async (username: string) => {
     return data
   } catch (error) {
       console.error('Error fetching GitHub profile:', error);
-      throw error;
+      return { error: error instanceof Error ? error.message : 'An unexpected error occurred.' };
   }
 };
 
@@ -36,12 +36,13 @@ export const fetchGitHubRepos = async (username: string) => {
           },
       });
     if (!response.ok) {
-      throw new Error(`User not found: ${response.status}`);
+      throw new Error (`User repo not found`);
     }
     const data = await response.json();
     return data
   } catch (error) {
-      console.error('Error fetching GitHub profile:', error);
-      return null;
+    console.error('Error fetching GitHub profile:', error);
+    // return { error: error instanceof Error ? error.message : 'An unexpected error occurred.' };
+    return null
   }
 };

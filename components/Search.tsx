@@ -7,7 +7,7 @@ const Search = () => {
     <div className='space-y-8 bg-slate-300 w-full max-w-[600px] py-8 px-8 rounded-md'>
       <div className='relative'>
           <Image 
-            src="assets/icons/github.svg" 
+            src="/assets/icons/github.svg" 
             alt="github logo"
             width={100}
             height={100}

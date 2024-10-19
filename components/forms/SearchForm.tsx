@@ -42,20 +42,20 @@ const SearchForm = () => {
         setError(null);
         try {
             const profile = await fetchGitHubUsername(username);
-            if (profile) {
-                form.reset();
-                router.push(`/user/${username}`)
-              console.log('GitHub profile:', profile);
+            if (profile?.error) {
+              setError(profile.error);
             } else {
-              console.log(error);
+              form.reset();
+              router.push(`/user/${username}`);
+              console.log('Profile:', profile);
             }
         } catch (error) {
           setError(error instanceof Error ? error.message : 'An unexpected error occurred.');
+          console.log(error);
+          
         } finally {
             setIsLoading(false);
         }
-
-        console.log(values)
     }
 
   return (

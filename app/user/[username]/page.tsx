@@ -16,50 +16,47 @@ export interface RepoProps {
 }
 
 const User = async ({params: { username }}: SearchParamProps  ) => {
-  try {
     const user = await fetchGitHubUsername(username);
     const repos = await fetchGitHubRepos(username);
 
     return (
-      <div className='w-full'>
-        <div className="">
-          <Link href="/" >
-            <Image
-              src="/assets/icons/arrow.svg"
-              height={50}
-              width={50}
-              alt="arrow-icon"
-              className="w-[30px] h-fit mx-8 my-4"
-            />
-          </Link>
-        </div>
-
-        <div className='lg:flex gap-4'>
-          <UserProfile 
-            username={user.login}
-            name={user.name}
-            avatarUrl={user.avatar_url}
-            location={user.location || "No location available"}
-            bio={user.bio || "No bio available"}
-            publicRepos={user.public_repos}
-          />
-
-          <div className='w-full lg:w-3/4 mt-8 lg:mt-0 px-8'>
-            <DataTable columns={columns} data={repos} />
+      <div className="">
+        {user && (repos !== null) ? 
+          <div className='w-full'>
+            <div className="">
+              <Link href="/" >
+                <Image
+                  src="/assets/icons/arrow.svg"
+                  height={50}
+                  width={50}
+                  alt="arrow-icon"
+                  className="w-[30px] h-fit mx-8 my-4"
+                />
+              </Link>
+            </div>
+  
+            <div className='lg:flex gap-4'>
+              <UserProfile 
+                username={user.login}
+                name={user.name}
+                avatarUrl={user.avatar_url}
+                location={user.location || "No location available"}
+                bio={user.bio || "No bio available"}
+                publicRepos={user.public_repos}
+              />
+  
+              <div className='w-full lg:w-3/4 mt-8 lg:mt-0 px-8'>
+                <DataTable columns={columns} data={repos} />
+              </div>
+            </div>
           </div>
-        </div>
+        :
+        <div className='w-full text-center flex justify-center items-center flex-col min-h-screen'>
+          <h1 className="text-xl font-bold mb-6">Something went wrong, check your username</h1>
+          <Search />
+        </div> }
       </div>
-    );
-
-  } catch (error) {
-    return (
-      <div className='w-full text-center flex justify-center items-center flex-col min-h-screen'>
-        <h1 className="text-xl font-bold">Something went wrong</h1>
-        <p className="mt-2 text-red-500">{error instanceof Error && error.message}</p>
-        <Search />
-      </div>
-    );
-  }
+      );
 }
 
 export default User;
