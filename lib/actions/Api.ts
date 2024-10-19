@@ -1,4 +1,6 @@
-const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
+'use server'
+
+const token = process.env.GITHUB_TOKEN;
 export const fetchGitHubUsername = async (username: string) => {
   try {
     const response = await fetch(`https://api.github.com/users/${username}`, {
