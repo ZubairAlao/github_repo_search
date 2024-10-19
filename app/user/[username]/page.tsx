@@ -51,7 +51,7 @@ const User = async ({params: { username }}: SearchParamProps  ) => {
             </div>
           </div>
         :
-        <div className='w-full text-center flex justify-center items-center flex-col min-h-screen'>
+        <div className='w-full text-center flex justify-center items-center flex-col min-h-screen px-8'>
           <h1 className="text-xl font-bold mb-6">Something went wrong, check your username</h1>
           <Search />
         </div> }
